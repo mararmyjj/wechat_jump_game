@@ -1,0 +1,9 @@
+自动安装依赖：
+pip install -r requirements.txt
+手动安装依赖：
+matplotlib>python -mpip install matplotlib
+PIL>pip install Pillow
+cv2>pip install opencv-python
+
+adruino物理外挂（搞了半天不能运行是因为那不是原作者，是别人copy乱改的项目）：
+serial>pip install pyserial
