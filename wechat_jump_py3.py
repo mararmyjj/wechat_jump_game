@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from PIL import Image
+import math
 
 
 def pull_screenshot():
@@ -12,11 +13,13 @@ def pull_screenshot():
     os.system('adb pull /sdcard/autojump.png .')
 
 
-def jump(distance):
-    press_time = distance * 1.35
+def jump(x):
+    #y=float(input("请输入系数="))
+    y = (-0.0004*x)+1.7084
+    press_time = x * y
     press_time = int(press_time)
     cmd = 'adb shell input swipe 320 410 320 410 ' + str(press_time)
-    print(cmd)
+    print("按压毫秒数为="+str(press_time))
     os.system(cmd)
 
 
@@ -37,12 +40,11 @@ def update_data():
 def updatefig(*args):
     global update
     if update:
-        time.sleep(1.5)
+        time.sleep(0.8)
         pull_screenshot()
         im.set_array(update_data())
         update = False
     return im,
-
 
 def on_click(event):
     global update
@@ -52,7 +54,7 @@ def on_click(event):
 
     ix, iy = event.xdata, event.ydata
     coords = [(ix, iy)]
-    print('now = ', coords)
+    #print('now = ', coords)
     cor.append(coords)
 
     click_count += 1
@@ -62,7 +64,7 @@ def on_click(event):
         cor2 = cor.pop()
 
         distance = (cor1[0][0] - cor2[0][0])**2 + (cor1[0][1] - cor2[0][1])**2
-        distance = distance ** 0.5
+        distance = math.sqrt(distance)
         print('distance = ', distance)
         jump(distance)
         update = True

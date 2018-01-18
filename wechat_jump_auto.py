@@ -43,7 +43,7 @@ DEBUG_SWITCH = False
 config = config.open_accordant_config()
 under_game_score_y = config['under_game_score_y']
 # 长按的时间系数，请自己根据实际情况调节
-press_coefficient = config['press_coefficient']
+#press_coefficient = config['press_coefficient']
 # 二分之一的棋子底座高度，可能要调节
 piece_base_height_1_2 = config['piece_base_height_1_2']
 # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
@@ -67,8 +67,10 @@ def jump(distance):
     """
     跳跃一定的距离
     """
-    press_time = distance * press_coefficient
-    press_time = max(press_time, 200)   # 设置 200ms 是最小的按压时间
+    #press_time = distance * press_coefficient
+    y=(-0.0004*distance)+1.7084
+    press_time = distance * y
+    #press_time = max(press_time, 200)   # 设置 200ms 是最小的按压时间
     press_time = int(press_time)
     cmd = 'adb shell input swipe {x1} {y1} {x2} {y2} {duration}'.format(
         x1=swipe_x1,
